@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.bingo-container {
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.bingo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    gap: 10px;
+}
+
+.bingo-cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+}
+
+.bingo-cell.toggled {
+    background-color: #4caf50;
+    color: #fff;
+}
