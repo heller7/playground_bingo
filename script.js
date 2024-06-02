@@ -13,7 +13,7 @@ function populateBingoGrid(questions) {
     shuffledQuestions.forEach(question => {
         const cell = document.createElement('div');
         cell.classList.add('bingo-cell');
-        cell.textContent = question;
+        cell.setAttribute('data-content', question);
         cell.onclick = () => toggleCell(cell);
         grid.appendChild(cell);
     });
