@@ -3,28 +3,33 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
     margin: 0;
+    font-size: 12px;
     background-color: #f0f0f0;
 }
 
 .bingo-container {
     text-align: center;
+    padding: 10px;
 }
 
 h1 {
     margin-bottom: 20px;
+    font-size: 2em;
 }
 
 .bingo-grid {
     display: grid;
-    grid-template-columns: repeat(5, 75px);
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
     gap: 10px;
+    max-width: 100%;
 }
 
 .bingo-cell {
-    width: 75px;
-    height: 75px;
-    font-size: 12px;
+    width: 100%;
+    padding-top: 100%; /* This creates a square aspect ratio */
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,10 +37,30 @@ h1 {
     border: 2px solid #ddd;
     cursor: pointer;
     user-select: none;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.bingo-cell::after {
+    content: attr(data-content);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 10px;
 }
 
 .bingo-cell.toggled {
     background-color: #4caf50;
     color: #fff;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .bingo-cell {
+        padding-top: 80%; /* Adjust the aspect ratio for smaller screens */
+    }
 }
