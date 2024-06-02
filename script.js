@@ -40,7 +40,6 @@ function inputQuestions() {
         "in einer Band/Chor ist/war.",
         "den gleichen Lieblingsfilm hat wie du.",
         "das gleiche Lieblingsessen hat wie du.",
-        "gleich viele Geschwister hat wie du.",
         "sich ehrenamtlich engagiert.",
         "mindestens ein Jahr außerhalb Deutschlands gelebt hat.",
         "im gleichen Monat wie du Geburtstag hat.",
