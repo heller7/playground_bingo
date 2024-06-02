@@ -3,15 +3,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     margin: 0;
-    font-size: 12px;
+    min-height: 100vh;
+    font-size: 10px;
     background-color: #f0f0f0;
 }
 
 .bingo-container {
     text-align: center;
     padding: 10px;
+    min-width: 550px;
 }
 
 h1 {
@@ -21,7 +22,7 @@ h1 {
 
 .bingo-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 10px;
     max-width: 100%;
 }
