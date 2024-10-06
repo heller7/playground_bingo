@@ -8,19 +8,34 @@ function shuffle(array) {
 
 function populateBingoGrid(questions) {
     const grid = document.getElementById('bingoGrid');
-    const shuffledQuestions = shuffle(questions);
+    grid.innerHTML = ''; // Clear existing grid
     
-    shuffledQuestions.forEach(question => {
+    const savedState = JSON.parse(localStorage.getItem('bingoState')) || {};
+    const shuffledQuestions = savedState.questions || shuffle(questions);
+    
+    shuffledQuestions.forEach((question, index) => {
         const cell = document.createElement('div');
         cell.classList.add('bingo-cell');
         cell.setAttribute('data-content', question);
-        cell.onclick = () => toggleCell(cell);
+        cell.textContent = question;
+        if (savedState[index]) {
+            cell.classList.add('toggled');
+        }
+        cell.onclick = () => toggleCell(cell, index);
         grid.appendChild(cell);
     });
+
+    // Save the initial state if it doesn't exist
+    if (!savedState.questions) {
+        saveState(shuffledQuestions);
+    }
 }
 
-function toggleCell(cell) {
+function toggleCell(cell, index) {
     cell.classList.toggle('toggled');
+    const state = JSON.parse(localStorage.getItem('bingoState')) || {};
+    state[index] = cell.classList.contains('toggled');
+    localStorage.setItem('bingoState', JSON.stringify(state));
 }
 
 function fetchQuestions() {
@@ -35,29 +50,46 @@ function fetchQuestions() {
 
 function inputQuestions() {
     const questions = [
-        "eine Sprache spricht, die du nicht sprichst.",
-        "ein Haustier hat.",
-        "in einer Band/Chor ist/war.",
-        "den gleichen Lieblingsfilm hat wie du.",
-        "das gleiche Lieblingsessen hat wie du.",
-        "sich ehrenamtlich engagiert.",
-        "mind. ein Jahr außerhalb Deutschlands gelebt hat.",
-        "im gleichen Monat wie du Geburtstag hat.",
-        "in einem Land war, indem du noch nie warst.",
-        "denselben Sport betreibt wie du.",
-        "mehr als 2 Sprachen spricht.",
-        "ein außergewöhnliches Hobby hat.",
-        "die ähnliche Musik hört wie du.",
-        "die letzten Monat im Kino war.",
-        "die gerne Witze erzählt.",
-        "die letzten Monat ein Konzert besucht hat.",
-        "die einen grünen Daumen hat.",
-        "die gerne kocht.",
-        "die einen Stehschreibtisch benutzt.",
-        "die kein Jabra-Headset nutzt.",
-        "das gleiche Lieblingsbuch hat wie du."
-    ]
+"Was ist dein Lieblingsurlaubsziel?",
+"Welches Haustier hast du oder würdest du gerne haben?",
+"Hast du schon einmal einen Sprachkurs gemacht?",
+"Welche Musikrichtung hörst du am liebsten?",
+"Bist du ein Morgenmensch oder eine Nachteule?",
+"Welches Buch hast du zuletzt gelesen?",
+"Kannst du ein Musikinstrument spielen?",
+"Hast du schon einmal ein Extremsportart ausprobiert?",
+"In welchem Land warst du zuletzt im Urlaub?",
+"Magst du lieber Kaffee oder Tee?",
+"Was ist dein Lieblingsfilm oder deine Lieblingsserie?",
+"Welches Hobby würdest du gerne mal ausprobieren?",
+"Wie viele Geschwister hast du?",
+"Hast du schon einmal bei einem Talentwettbewerb mitgemacht?",
+"Was war dein erster Job?",
+"Was ist dein Lieblingsessen?",
+"Was ist dein Sternzeichen?",
+"Hast du einen Spitznamen? Wenn ja, welchen?",
+"Welchen Prominenten würdest du gerne einmal treffen?",
+"Sprichst du mehrere Sprachen?",
+"Was ist dein Lieblingssport?",
+"Magst du lieber Berge oder Meer?",
+"Hast du ein besonderes Talent?",
+"Was ist deine Lieblingsjahreszeit?",
+"Welche Stadt würdest du gerne einmal besuchen?"
+    ];
     populateBingoGrid(questions);
 }
 
-window.onload = inputQuestions();
+function saveState(questions) {
+    const state = { questions: questions };
+    localStorage.setItem('bingoState', JSON.stringify(state));
+}
+
+function resetGame() {
+    localStorage.removeItem('bingoState');
+    inputQuestions();
+}
+
+window.onload = inputQuestions;
+
+document.getElementById('resetButton').addEventListener('click', resetGame);
+
